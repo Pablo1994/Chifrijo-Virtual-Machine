@@ -1,0 +1,35 @@
+/*
+ // Original
+    y = 10;
+	f = x -> g(x)+y;
+	g = x -> 2*x;
+	f(666);
+*/
+// Esperado del CHCompiler (generado a mano)
+main 0 3 { // main=#0 tres locales sin enclosing
+	lc 10;
+	st 0;
+	lc 1;
+	st 1;
+	lc 2;
+	st 2;
+	lc 1; // carga el indice de f
+	lc 666;
+	call; // llama a f
+	print;
+	exit;
+}
+fun 1 1 0 { // esta es f = #1, solo un local, enclosing= 0 (main)
+	lc 2; // carga indice de g=2
+	ld 0; // carga x
+	call;
+	ld 0 0; // Carga y en la funcion main=0
+	add;
+	ret;
+}
+fun 2 1 0{ // Esta es g = #2, un local, enclosing = 0 (main)
+	lc 2;
+	ld 0;
+	mult;
+	ret;
+}
