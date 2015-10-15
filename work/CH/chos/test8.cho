@@ -1,0 +1,8 @@
+Reading from chtest/test8.compile
+CH EVALUATION STARTS
+0
+CH COMPILATION STARTS
+0 : LDC 5;
+1 : LDC 0;
+2 : equ;
+3 : PRINT;

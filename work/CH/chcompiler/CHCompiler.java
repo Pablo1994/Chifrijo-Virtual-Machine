@@ -75,9 +75,37 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
     public CHAst visitMulDiv(CHExprParser.MulDivContext ctx) {
         CHAst left = visit(ctx.expr(0)); 
         CHAst right = visit(ctx.expr(1));
-		CHAst a = ( ctx.op.getType() == CHExprParser.MUL )?MUL:DIV;
+		CHAst a = ( ctx.op.getType() == CHExprParser.MUL )? MUL : DIV;
         prog.add(a);
 		return a;
+    }
+    
+    @Override 
+    public CHAst visitRelExpr(CHExprParser.RelExprContext ctx){
+        System.err.println("Me vine al Rel Exp");
+        CHAst left = visit(ctx.expr(0)); 
+        CHAst right = visit(ctx.expr(1));
+		CHAst a = ( ctx.op.getType() == CHExprParser.LEQ )? LEQ : ( ctx.op.getType() == CHExprParser.EQU)? EQU : DIF;
+        prog.add(a);
+		return a;
+    }
+    
+    @Override 
+    public CHAst visitRelExp(CHExprParser.RelExpContext ctx){
+        CHAst left = visit(ctx.expr(0)); 
+        CHAst right = visit(ctx.expr(1));
+		CHAst a = ( ctx.op.getType() == CHExprParser.LEQ )? LEQ : ( ctx.op.getType() == CHExprParser.EQU)? EQU : DIF;
+        prog.add(a);
+		return a;
+    }
+    
+    @Override 
+    public CHAst visitNot(CHExprParser.NotContext ctx){
+        System.err.println("Estoy en el NOT");
+        visit(ctx.relExp());
+        CHAst a = NOT;
+        prog.add(a);
+        return a;
     }
 
     @Override

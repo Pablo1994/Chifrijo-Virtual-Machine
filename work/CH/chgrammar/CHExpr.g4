@@ -10,11 +10,16 @@ statement:   expr ';'                # printExpr
            | ';'                     # blank
 ;
 
-expr:     expr op=('*'|'/') expr      # MulDiv
-       |  expr op=('+'|'-') expr      # AddSub
-       |  NUMBER                      # num
-       |  ID (formal)?                # id
-       |  '(' expr ')'                # parens
+expr:     expr op=('*'|'/') expr            # MulDiv
+       |  expr op=('+'|'-') expr            # AddSub
+       |  expr op=('<='|'=='|'!=') expr     # relExpr
+       |  NUMBER                            # num
+       |  ID (formal)?                      # id
+       |  '(' expr ')'                      # parens
+       |  '!' '(' relExp ')'                # Not
+;
+relExp:
+    expr op=('<='|'=='|'!=') expr
 ;
 formal : '(' expr ')'
 ;
@@ -26,9 +31,19 @@ ADD :   '+'
 ;
 SUB :   '-' 
 ;
+LEQ :   '<='
+;
+NOT :   '!'
+;
+EQU :   '=='
+;
+DIF :   '!='
+;
 ID  :   [a-zA-Z_][a-zA-Z_0-9]* 
 ;      
 NUMBER :   [0-9]+ 
+;
+constant: NUMBER | 'true' #ExprTrue | 'false' #ExprFalse
 ;
 // Ignore
 CML:   '/*' .*? '*/' -> skip

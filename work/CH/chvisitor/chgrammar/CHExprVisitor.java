@@ -44,6 +44,13 @@ public interface CHExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParens(CHExprParser.ParensContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Not}
+	 * labeled alternative in {@link CHExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNot(CHExprParser.NotContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link CHExprParser#expr}.
 	 * @param ctx the parse tree
@@ -72,9 +79,28 @@ public interface CHExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitId(CHExprParser.IdContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code relExpr}
+	 * labeled alternative in {@link CHExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelExpr(CHExprParser.RelExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CHExprParser#relExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelExp(CHExprParser.RelExpContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CHExprParser#formal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFormal(CHExprParser.FormalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CHExprParser#constant}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstant(CHExprParser.ConstantContext ctx);
 }

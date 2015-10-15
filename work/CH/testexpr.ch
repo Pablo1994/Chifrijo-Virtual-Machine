@@ -1,0 +1,26 @@
+Reading from chtest/test.expr
+CH EVALUATION STARTS
+193
+17
+9
+CH COMPILATION STARTS
+0 : LDC 193;
+1 : PRINT;
+2 : LDC 5;
+3 : STORE #0;
+4 : LDC 6;
+5 : STORE #1;
+6 : LD #0;
+7 : LD #1;
+8 : LDC 2;
+9 : MUL;
+10 : ADD;
+11 : PRINT;
+12 : LDC 1;
+13 : LDC 2;
+14 : ADD;
+15 : LDC 3;
+16 : MUL;
+17 : STORE #2;
+18 : LD #2;
+19 : PRINT;

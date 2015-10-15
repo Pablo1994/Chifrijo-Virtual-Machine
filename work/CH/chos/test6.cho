@@ -1,0 +1,8 @@
+Reading from chtest/test6.compile
+CH EVALUATION STARTS
+7
+CH COMPILATION STARTS
+0 : LDC 6;
+1 : LDC 7;
+2 : leq;
+3 : PRINT;
