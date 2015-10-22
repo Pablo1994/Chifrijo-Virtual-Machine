@@ -5,22 +5,21 @@ Adaptada del ejemplo de Parrt pag 39
 */
 program:   statement+ ;
 
-statement:   expr ';'                # printExpr
-           | ID '=' expr ';'         # assign
+statement:   rexpr ';'                # printExpr
+           | ID '=' rexpr ';'         # assign
            | ';'                     # blank
 ;
-
+rexpr:
+    expr (op=('<='|'=='|'!=') expr)?           # relExpr  
+;
 expr:     expr op=('*'|'/') expr            # MulDiv
        |  expr op=('+'|'-') expr            # AddSub
-       |  expr op=('<='|'=='|'!=') expr     # relExpr
        |  NUMBER                            # num
        |  ID (formal)?                      # id
        |  '(' expr ')'                      # parens
-       |  '!' '(' relExp ')'                # Not
+       |  '!' '(' rexpr ')'                 # Not
 ;
-relExp:
-    expr op=('<='|'=='|'!=') expr
-;
+
 formal : '(' expr ')'
 ;
 MUL :   '*' 

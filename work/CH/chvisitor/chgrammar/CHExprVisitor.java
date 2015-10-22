@@ -37,6 +37,13 @@ public interface CHExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlank(CHExprParser.BlankContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code relExpr}
+	 * labeled alternative in {@link CHExprParser#rexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelExpr(CHExprParser.RelExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code parens}
 	 * labeled alternative in {@link CHExprParser#expr}.
 	 * @param ctx the parse tree
@@ -78,19 +85,6 @@ public interface CHExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitId(CHExprParser.IdContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code relExpr}
-	 * labeled alternative in {@link CHExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRelExpr(CHExprParser.RelExprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link CHExprParser#relExp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRelExp(CHExprParser.RelExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CHExprParser#formal}.
 	 * @param ctx the parse tree

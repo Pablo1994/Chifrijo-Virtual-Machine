@@ -5,6 +5,8 @@ import java.util.stream.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.io.PrintStream;
+
 
 public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
      
@@ -19,9 +21,12 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
 	public void genCode(){
 	   prog.genCode();
 	}
+	public void genCode(PrintStream out){
+	   prog.genCode(out);
+	}
     @Override
     public CHAst visitPrintExpr(CHExprParser.PrintExprContext ctx) {
-        CHAst value = visit(ctx.expr());
+        CHAst value = visit(ctx.rexpr());
         prog.add(PRINT);        
         return PRINT;                         
     }
@@ -82,27 +87,23 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
     
     @Override 
     public CHAst visitRelExpr(CHExprParser.RelExprContext ctx){
-        System.err.println("Me vine al Rel Exp");
-        CHAst left = visit(ctx.expr(0)); 
-        CHAst right = visit(ctx.expr(1));
-		CHAst a = ( ctx.op.getType() == CHExprParser.LEQ )? LEQ : ( ctx.op.getType() == CHExprParser.EQU)? EQU : DIF;
-        prog.add(a);
-		return a;
+        if(ctx.expr().size()>1){
+            System.err.println("Me vine al Rel Exp");
+            CHAst left = visit(ctx.expr(0)); 
+            CHAst right = visit(ctx.expr(1));
+            CHAst a = ( ctx.op.getType() == CHExprParser.LEQ )? LEQ : ( ctx.op.getType() == CHExprParser.EQU)? EQU : DIF;
+            prog.add(a);
+            return a;
+        } else {
+            return visit(ctx.expr(0)); 
+        }
     }
     
-    @Override 
-    public CHAst visitRelExp(CHExprParser.RelExpContext ctx){
-        CHAst left = visit(ctx.expr(0)); 
-        CHAst right = visit(ctx.expr(1));
-		CHAst a = ( ctx.op.getType() == CHExprParser.LEQ )? LEQ : ( ctx.op.getType() == CHExprParser.EQU)? EQU : DIF;
-        prog.add(a);
-		return a;
-    }
     
     @Override 
     public CHAst visitNot(CHExprParser.NotContext ctx){
         System.err.println("Estoy en el NOT");
-        visit(ctx.relExp());
+        visit(ctx.rexpr());
         CHAst a = NOT;
         prog.add(a);
         return a;
@@ -112,7 +113,7 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
     public CHAst visitAssign(CHExprParser.AssignContext ctx) {
         String id = ctx.ID().getText();
 		int k = findSymbol(id);
-        CHAst value = visit(ctx.expr());   
+        CHAst value = visit(ctx.rexpr());   
         CHAst store = STORE(k);
         prog.add(store);		
         return store;

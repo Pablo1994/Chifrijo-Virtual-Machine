@@ -1,0 +1,5 @@
+0 : LDC 5;
+1 : LDC 4;
+2 : leq;
+3 : not;
+4 : PRINT;

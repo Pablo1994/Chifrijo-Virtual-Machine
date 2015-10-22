@@ -1,0 +1,12 @@
+0 : LD #1;
+1 : LD #2;
+2 : ADD;
+3 : LD #2;
+4 : leq;
+5 : not;
+6 : LD #2;
+7 : LD #0;
+8 : leq;
+9 : not;
+10 : equ;
+11 : STORE #0;

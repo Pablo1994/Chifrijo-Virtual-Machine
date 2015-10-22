@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 public class CHMain {
     public static void main(String[] args) throws Exception {
@@ -36,7 +37,8 @@ public class CHMain {
 		System.out.println("CH COMPILATION STARTS");
 		CHCompiler comp = new CHCompiler();
 		comp.compile(tree);
-		comp.genCode();
-		
+		if(inputFile == null)
+            comp.genCode();
+		else comp.genCode(new PrintStream(inputFile+"o"));
     }
 }

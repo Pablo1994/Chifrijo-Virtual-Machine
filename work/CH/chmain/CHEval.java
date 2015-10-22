@@ -13,7 +13,7 @@ public class CHEval extends CHExprBaseVisitor<Integer> {
     @Override
     public Integer visitAssign(CHExprParser.AssignContext ctx) {
         String id = ctx.ID().getText();  
-        int value = visit(ctx.expr());   
+        int value = visit(ctx.rexpr());   
         memory.put(id, value);        
         return value;
     }
@@ -21,7 +21,7 @@ public class CHEval extends CHExprBaseVisitor<Integer> {
     
     @Override
     public Integer visitPrintExpr(CHExprParser.PrintExprContext ctx) {
-        Integer value = visit(ctx.expr());
+        Integer value = visit(ctx.rexpr());
         System.out.println(value);         
         return 0;                         
     }
@@ -62,27 +62,31 @@ public class CHEval extends CHExprBaseVisitor<Integer> {
     }
 
     @Override 
-    public Integer visitRelExp(CHExprParser.RelExpContext ctx){
-        int left = visit(ctx.expr(0)); 
-        int right = visit(ctx.expr(1));
-        if ( ctx.op.getType() == CHExprParser.LEQ ){
-            if (left <= right) return 1;
-            else return 0;
-		}
-		else 
-            if( ctx.op.getType() == CHExprParser.EQU ) {
-                if(left == right) return 1;
+    public Integer visitRelExpr(CHExprParser.RelExprContext ctx){
+        if(ctx.expr().size()>1){
+            int left = visit(ctx.expr(0)); 
+            int right = visit(ctx.expr(1));
+            if ( ctx.op.getType() == CHExprParser.LEQ ){
+                if (left <= right) return 1;
                 else return 0;
             }
-            else {
-                if(left == right) return 0;
-                else return 1;
-            }
+            else 
+                if( ctx.op.getType() == CHExprParser.EQU ) {
+                    if(left == right) return 1;
+                    else return 0;
+                }
+                else {
+                    if(left == right) return 0;
+                    else return 1;
+                }
+        } else {
+            return visit(ctx.expr(0));
+        }
     }
     
     @Override 
     public Integer visitNot(CHExprParser.NotContext ctx){
-        if(visit(ctx.relExp()) == 1)
+        if(visit(ctx.rexpr()) == 1)
             return 0;
         else
             return 1;
