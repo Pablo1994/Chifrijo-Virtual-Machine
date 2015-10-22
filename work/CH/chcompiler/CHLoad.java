@@ -4,5 +4,5 @@ public class CHLoad implements CHAst{
     public CHLoad(int k){
 	   this.k=k;
 	}
-    public void genCode(PrintStream out){out.println("LD "+"#"+k+";");}
+    public void genCode(PrintStream out){out.println("ld "+k+";");}
 }

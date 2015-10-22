@@ -4,5 +4,5 @@ public class CHStore implements CHAst{
     public CHStore(int k){
 	   this.k=k;
 	}
-    public void genCode(PrintStream out){out.println("STORE "+"#"+k+";");}
+    public void genCode(PrintStream out){out.println("st "+k+";");}
 }
