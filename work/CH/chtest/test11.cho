@@ -1,8 +1,8 @@
-0 : LD #1;
-1 : LD #2;
-2 : ADD;
-3 : LD #2;
-4 : LD #1;
-5 : ADD;
-6 : dif;
-7 : STORE #0;
+ld 1;
+ld 2;
+add;
+ld 2;
+ld 1;
+add;
+dif;
+st 0;

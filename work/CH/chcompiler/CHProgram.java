@@ -7,7 +7,7 @@ class CHProgram extends ArrayList<CHAst> implements CHAst{
 		return instrucction++;
 	}
 	public boolean add(CHAst inst){
-		return super.add(new CHLabInst(inc() ,inst));
+		return super.add(inst);
 	}
 	
 	public void genCode(PrintStream out){
