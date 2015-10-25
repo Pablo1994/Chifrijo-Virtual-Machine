@@ -63,9 +63,8 @@ public class CHEval extends CHExprBaseVisitor<Integer> {
 
     @Override 
     public Integer visitRelExpr(CHExprParser.RelExprContext ctx){
-        if(ctx.expr().size()>1){
-            int left = visit(ctx.expr(0)); 
-            int right = visit(ctx.expr(1));
+            int left = visit(ctx.rexpr(0)); 
+            int right = visit(ctx.rexpr(1));
             if ( ctx.op.getType() == CHExprParser.LEQ ){
                 if (left <= right) return 1;
                 else return 0;
@@ -79,9 +78,22 @@ public class CHEval extends CHExprBaseVisitor<Integer> {
                     if(left == right) return 0;
                     else return 1;
                 }
-        } else {
-            return visit(ctx.expr(0));
-        }
+    }
+    
+    
+    @Override 
+    public Integer visitArith(CHExprParser.ArithContext ctx){
+        return visit(ctx.expr());
+    }
+    
+    @Override 
+    public Integer visitTrue(CHExprParser.TrueContext ctx){
+        return 1;
+    }
+    
+    @Override 
+    public Integer visitFalse(CHExprParser.FalseContext ctx){
+        return 0;
     }
     
     @Override 
@@ -94,6 +106,6 @@ public class CHEval extends CHExprBaseVisitor<Integer> {
     
     @Override
     public Integer visitParens(CHExprParser.ParensContext ctx) {
-        return visit(ctx.expr());
+        return visit(ctx.rexpr());
     }
 }

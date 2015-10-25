@@ -1,1 +1,1 @@
-w = x+y != y+x;
+w = x+y != true;

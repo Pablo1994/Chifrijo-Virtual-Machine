@@ -10,7 +10,10 @@ public interface CHEmiter {
   final CHDif DIF = new CHDif();
   final CHNot NOT = new CHNot();
   final CHCall CALL = new CHCall();
-  default CHLdc LDC(int k){return new CHLdc(k);}
+  final CHTrue TRUE = new CHTrue();
+  final CHFalse FALSE = new CHFalse();
+  default CHLdic LDIC(int k){return new CHLdic(k);}
+  default CHLdbc LDBC(boolean k){return new CHLdbc(k);}
   default CHLoad LD(int k){return new CHLoad(k);}
   default CHStore STORE(int k){return new CHStore(k);}
     

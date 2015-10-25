@@ -24,6 +24,12 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
 	public void genCode(PrintStream out){
 	   prog.genCode(out);
 	}
+	
+	@Override
+    public CHAst visitStexpr(CHExprParser.StexprContext ctx) {
+        return visit(ctx.rexpr());       
+    }
+	
     @Override
     public CHAst visitPrintExpr(CHExprParser.PrintExprContext ctx) {
         CHAst value = visit(ctx.rexpr());
@@ -34,7 +40,7 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
     
     @Override
     public CHAst visitNum(CHExprParser.NumContext ctx) {
-        CHAst ldc = LDC(Integer.valueOf(ctx.NUMBER().getText()));
+        CHAst ldc = LDIC(Integer.valueOf(ctx.NUMBER().getText()));
 		prog.add(ldc);
 		return ldc; 
     }
@@ -87,16 +93,17 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
     
     @Override 
     public CHAst visitRelExpr(CHExprParser.RelExprContext ctx){
-        if(ctx.expr().size()>1){
             System.err.println("Me vine al Rel Exp");
-            CHAst left = visit(ctx.expr(0)); 
-            CHAst right = visit(ctx.expr(1));
+            CHAst left = visit(ctx.rexpr(0)); 
+            CHAst right = visit(ctx.rexpr(1));
             CHAst a = ( ctx.op.getType() == CHExprParser.LEQ )? LEQ : ( ctx.op.getType() == CHExprParser.EQU)? EQU : DIF;
             prog.add(a);
             return a;
-        } else {
-            return visit(ctx.expr(0)); 
-        }
+    }
+    
+    @Override 
+    public CHAst visitArith(CHExprParser.ArithContext ctx){
+        return visit(ctx.expr());
     }
     
     
@@ -107,6 +114,20 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
         CHAst a = NOT;
         prog.add(a);
         return a;
+    }
+    
+    @Override 
+    public CHAst visitTrue(CHExprParser.TrueContext ctx){
+        CHAst ldbc = LDBC(true);
+        prog.add(ldbc);
+        return ldbc;
+    }
+    
+    @Override 
+    public CHAst visitFalse(CHExprParser.FalseContext ctx){
+        CHAst ldbc = LDBC(false);
+        prog.add(ldbc);
+        return ldbc;
     }
 
     @Override
@@ -120,6 +141,6 @@ public class CHCompiler extends CHExprBaseVisitor<CHAst> implements CHEmiter{
     }
     @Override
     public CHAst visitParens(CHExprParser.ParensContext ctx) {
-        return visit(ctx.expr());
+        return visit(ctx.rexpr());
     }
 }

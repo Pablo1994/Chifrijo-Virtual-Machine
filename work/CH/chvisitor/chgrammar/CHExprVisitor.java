@@ -16,6 +16,13 @@ public interface CHExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(CHExprParser.ProgramContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code stexpr}
+	 * labeled alternative in {@link CHExprParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStexpr(CHExprParser.StexprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code printExpr}
 	 * labeled alternative in {@link CHExprParser#statement}.
 	 * @param ctx the parse tree
@@ -37,26 +44,47 @@ public interface CHExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlank(CHExprParser.BlankContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Not}
+	 * labeled alternative in {@link CHExprParser#rexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNot(CHExprParser.NotContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parens}
+	 * labeled alternative in {@link CHExprParser#rexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParens(CHExprParser.ParensContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Arith}
+	 * labeled alternative in {@link CHExprParser#rexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArith(CHExprParser.ArithContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code True}
+	 * labeled alternative in {@link CHExprParser#rexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrue(CHExprParser.TrueContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code False}
+	 * labeled alternative in {@link CHExprParser#rexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFalse(CHExprParser.FalseContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code relExpr}
 	 * labeled alternative in {@link CHExprParser#rexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitRelExpr(CHExprParser.RelExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code parens}
-	 * labeled alternative in {@link CHExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParens(CHExprParser.ParensContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Not}
-	 * labeled alternative in {@link CHExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNot(CHExprParser.NotContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link CHExprParser#expr}.
